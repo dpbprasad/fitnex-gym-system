@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "fitnex-tablet/package.json",
+      "use": "@vercel/next"
+    },
+    {
+      "src": "fitnex-mobile/package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/tablet",
+      "dest": "https://fitnex-tablet.vercel.app"
+    },
+    {
+      "src": "/mobile",
+      "dest": "https://fitnex-mobile.vercel.app"
+    }
+  ]
+}
