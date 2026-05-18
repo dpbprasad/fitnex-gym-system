@@ -19,4 +19,9 @@ router.get(
   TenantController.listStaff
 );
 
+router.get(
+  '/tenants/:tenantId/qr-token',
+  TenantController.getQRToken
+);
+
 module.exports = router;

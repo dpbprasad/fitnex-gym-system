@@ -1,5 +1,6 @@
 const { User, sequelize } = require('../models');
 const { hashPassword, generateToken } = require('../utils/crypto');
+const QRService = require('../services/QRService');
 
 class TenantController {
   static async createStaff(req, res) {
@@ -56,6 +57,17 @@ class TenantController {
       res.json({ staff });
     } catch (error) {
       console.error('List staff error:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  }
+
+  static async getQRToken(req, res) {
+    try {
+      const { tenantId } = req.params;
+      const token = QRService.generateCheckInToken(tenantId);
+      res.json({ token });
+    } catch (error) {
+      console.error('Get QR token error:', error);
       res.status(500).json({ error: 'Internal server error' });
     }
   }
