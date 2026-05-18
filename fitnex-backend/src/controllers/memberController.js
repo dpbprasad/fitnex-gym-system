@@ -29,6 +29,7 @@ class MemberController {
         guardianSignature,
         // Declaration
         declarationSigned,
+        signature,
         // Health Declaration
         healthDeclaration,
         // Emergency Contacts
@@ -97,7 +98,8 @@ class MemberController {
         guardian_contact: isUnder18 ? guardianContact : null,
         guardian_signature: isUnder18 ? guardianSignature : false,
         declaration_signed: declarationSigned || false,
-        declaration_signed_at: declarationSigned ? new Date() : null
+        declaration_signed_at: declarationSigned ? new Date() : null,
+        signature_url: signature || null
       }, { transaction });
 
       // Create membership

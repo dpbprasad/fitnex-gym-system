@@ -10,7 +10,7 @@ export function useMembers() {
   const { user } = useAuth();
 
   const fetchMembers = async () => {
-    if (!user) return;
+    if (!user || !user.tenantId) return;
 
     setLoading(true);
     setError(null);

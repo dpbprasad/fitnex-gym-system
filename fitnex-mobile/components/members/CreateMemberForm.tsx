@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import Modal from '@/components/ui/Modal';
+import SignaturePad from '@/components/ui/SignaturePad';
 
 interface CreateMemberFormProps {
   isOpen: boolean;
@@ -33,6 +34,7 @@ export default function CreateMemberForm({ isOpen, onClose, onSubmit }: CreateMe
     guardianSignature: false,
     // Declaration
     declarationSigned: false,
+    memberSignature: '',
     // Health Declaration
     healthDeclaration: {
       heartCondition: false,
@@ -362,12 +364,21 @@ export default function CreateMemberForm({ isOpen, onClose, onSubmit }: CreateMe
                   onChange={(e) => updateEmergencyContact(index, 'name', e.target.value)}
                   required
                 />
-                <Input
-                  label="Relationship"
-                  value={contact.relationship}
-                  onChange={(e) => updateEmergencyContact(index, 'relationship', e.target.value)}
-                  required
-                />
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Relationship</label>
+                  <select
+                    value={contact.relationship}
+                    onChange={(e) => updateEmergencyContact(index, 'relationship', e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-gray-900 bg-white"
+                    required
+                  >
+                    <option value="">Select relationship...</option>
+                    <option value="Spouse">Spouse</option>
+                    <option value="Parent">Parent</option>
+                    <option value="Brother/Sister">Brother/Sister</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
                 <Input
                   label="Contact Number"
                   type="tel"
@@ -388,12 +399,43 @@ export default function CreateMemberForm({ isOpen, onClose, onSubmit }: CreateMe
             )}
           </div>
 
+          {/* General Rules and Regulations Section */}
+          <div className="space-y-4 bg-gray-50 p-4 rounded-lg">
+            <h3 className="text-lg font-medium text-gray-700 border-b pb-2">General Rules and Regulations</h3>
+            <ul className="list-disc list-inside space-y-2 text-sm text-gray-600">
+              <li>All members must present valid ID upon entry</li>
+              <li>Proper workout attire and closed-toe shoes are required</li>
+              <li>Wipe down equipment after use</li>
+              <li>Re-rack weights after use</li>
+              <li>No food or drinks (except water) in workout areas</li>
+              <li>Respect time limits on cardio machines during peak hours</li>
+              <li>Use equipment responsibly and report any damage</li>
+              <li>Follow staff instructions at all times</li>
+              <li>Mobile phones should be used in designated areas only</li>
+              <li>Towels are required for all workout activities</li>
+            </ul>
+            <label className="flex items-start space-x-2">
+              <input
+                type="checkbox"
+                checked={formData.declarationSigned}
+                onChange={(e) => setFormData({ ...formData, declarationSigned: e.target.checked })}
+                required
+                className="w-4 h-4 mt-1"
+              />
+              <span className="text-sm text-gray-700">I have read and agree to abide by the gym rules and regulations</span>
+            </label>
+          </div>
+
           {/* Declaration Section */}
           <div className="space-y-4 bg-blue-50 p-4 rounded-lg">
             <h3 className="text-lg font-medium text-gray-700 border-b pb-2">Declaration & Consent</h3>
             <p className="text-sm text-gray-600">
               I declare that the information I have provided, including my health and medical details, is true and complete to the best of my knowledge. I understand that physical exercise carries inherent risks, and that I take part voluntarily and at my own risk.
             </p>
+            <SignaturePad
+              value={formData.memberSignature}
+              onChange={(signature) => setFormData({ ...formData, memberSignature: signature })}
+            />
             <label className="flex items-start space-x-2">
               <input
                 type="checkbox"
