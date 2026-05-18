@@ -86,6 +86,18 @@ async function migrate() {
         )
       `, { transaction });
 
+      // Drop old constraint if exists BEFORE updating data
+      await sequelize.query(`
+        ALTER TABLE memberships DROP CONSTRAINT IF EXISTS memberships_status_check
+      `, { transaction });
+
+      // Update existing membership status values to match new enum
+      await sequelize.query(`
+        UPDATE memberships 
+        SET status = 'Inactive' 
+        WHERE status NOT IN ('Active', 'On Hold', 'Inactive')
+      `, { transaction });
+
       // Update membership status enum
       await sequelize.query(`
         ALTER TABLE memberships 
