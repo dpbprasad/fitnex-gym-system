@@ -1,5 +1,6 @@
 const { User, Membership, HealthDeclaration, EmergencyContact, MembershipStatusHistory, sequelize } = require('../models');
 const { hashPassword, generateToken } = require('../utils/crypto');
+const EmailService = require('../services/EmailService');
 
 class MemberController {
   static async createMember(req, res) {
@@ -142,6 +143,10 @@ class MemberController {
       }
 
       await transaction.commit();
+
+      // Send account setup email (graceful - won't fail if not configured)
+      const setupToken = generateToken({ userId: user.user_id, email: user.email }, '24h');
+      await EmailService.sendAccountSetupEmail(user.email, user.full_name, setupToken);
 
       res.status(201).json({
         message: 'Member created successfully',

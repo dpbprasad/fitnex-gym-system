@@ -1,5 +1,6 @@
-const { Payment, Membership, sequelize } = require('../models');
+const { Payment, Membership, User, sequelize } = require('../models');
 const FinancialService = require('../services/FinancialService');
+const EmailService = require('../services/EmailService');
 const redis = require('redis');
 const config = require('../config');
 
@@ -20,7 +21,8 @@ class BillingController {
         where: {
           user_id: memberId,
           tenant_id: tenantId
-        }
+        },
+        include: [{ model: User }]
       });
 
       if (!membership) {
@@ -54,6 +56,19 @@ class BillingController {
       }, { transaction });
 
       await transaction.commit();
+
+      // Send payment receipt email (graceful - won't fail if not configured)
+      if (membership.User && membership.User.email) {
+        await EmailService.sendPaymentReceipt(
+          membership.User.email,
+          membership.User.full_name,
+          {
+            paymentId: payment.payment_id,
+            amount: payment.amount,
+            paymentMethod: payment.payment_method
+          }
+        );
+      }
 
       const redisClient = redis.createClient({
         url: config.redis.url,
