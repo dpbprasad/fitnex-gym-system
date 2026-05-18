@@ -14,7 +14,13 @@ const app = express();
 
 app.use(helmet());
 app.use(cors({
-  origin: ['http://localhost:3002', 'http://localhost:3003', 'http://localhost:3004'],
+  origin: [
+    'http://localhost:3002',
+    'http://localhost:3003',
+    'http://localhost:3004',
+    'https://fitnex-gym-system.vercel.app',
+    'https://fitnex-gym-system-mobile.vercel.app'
+  ],
   credentials: true
 }));
 app.use(express.json());
