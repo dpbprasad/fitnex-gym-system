@@ -28,8 +28,8 @@ const Membership = sequelize.define('Membership', {
     onDelete: 'CASCADE'
   },
   status: {
-    type: DataTypes.ENUM('Active', 'Unpaid', 'Frozen'),
-    defaultValue: 'Unpaid',
+    type: DataTypes.ENUM('Active', 'On Hold', 'Inactive'),
+    defaultValue: 'Inactive',
     allowNull: false
   },
   valid_from: {

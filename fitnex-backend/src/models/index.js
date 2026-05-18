@@ -5,6 +5,9 @@ const AttendanceLog = require('./AttendanceLog');
 const GLAccount = require('./GLAccount');
 const GLTransaction = require('./GLTransaction');
 const Payment = require('./Payment');
+const HealthDeclaration = require('./HealthDeclaration');
+const EmergencyContact = require('./EmergencyContact');
+const MembershipStatusHistory = require('./MembershipStatusHistory');
 
 module.exports = {
   Tenant,
@@ -13,5 +16,8 @@ module.exports = {
   AttendanceLog,
   GLAccount,
   GLTransaction,
-  Payment
+  Payment,
+  HealthDeclaration,
+  EmergencyContact,
+  MembershipStatusHistory
 };
