@@ -4,7 +4,7 @@ const TenantController = require('../controllers/tenantController');
 const { isAuthenticated, isTenantAdmin, validateTenantAccess } = require('../middleware/auth');
 
 router.post(
-  '/tenants/:tenantId/staff',
+  '/:tenantId/staff',
   isAuthenticated,
   isTenantAdmin,
   validateTenantAccess,
@@ -12,7 +12,7 @@ router.post(
 );
 
 router.get(
-  '/tenants/:tenantId/staff',
+  '/:tenantId/staff',
   isAuthenticated,
   isTenantAdmin,
   validateTenantAccess,
@@ -20,7 +20,7 @@ router.get(
 );
 
 router.get(
-  '/tenants/:tenantId/qr-token',
+  '/:tenantId/qr-token',
   TenantController.getQRToken
 );
 
