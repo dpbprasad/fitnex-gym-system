@@ -9,6 +9,16 @@ const HealthDeclaration = require('./HealthDeclaration');
 const EmergencyContact = require('./EmergencyContact');
 const MembershipStatusHistory = require('./MembershipStatusHistory');
 
+// Setup associations
+User.hasOne(HealthDeclaration, { foreignKey: 'user_id', as: 'healthDeclaration' });
+HealthDeclaration.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
+
+User.hasMany(EmergencyContact, { foreignKey: 'user_id', as: 'emergencyContacts' });
+EmergencyContact.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
+
+Membership.hasMany(MembershipStatusHistory, { foreignKey: 'membership_id', as: 'statusHistory' });
+MembershipStatusHistory.belongsTo(Membership, { foreignKey: 'membership_id', as: 'membership' });
+
 module.exports = {
   Tenant,
   User,
