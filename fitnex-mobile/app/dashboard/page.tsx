@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import AuthGuard from '@/components/auth/AuthGuard';
 import { useAuth } from '@/hooks/useAuth';
 import Button from '@/components/ui/Button';
@@ -7,6 +8,7 @@ import Card from '@/components/ui/Card';
 import QRScanner from '@/components/scanner/QRScanner';
 
 export default function DashboardPage() {
+  const router = useRouter();
   const { user, logout } = useAuth();
 
   return (
@@ -58,13 +60,13 @@ export default function DashboardPage() {
             <Card>
               <h3 className="text-lg font-semibold text-gray-800 mb-4">Quick Actions</h3>
               <div className="space-y-3">
-                <Button className="w-full" onClick={() => window.location.href = '/members'}>
+                <Button className="w-full" onClick={() => router.push('/members')}>
                   Manage Members
                 </Button>
-                <Button className="w-full" variant="secondary" onClick={() => window.location.href = '/payments'}>
+                <Button className="w-full" variant="secondary" onClick={() => router.push('/payments')}>
                   Process Payments
                 </Button>
-                <Button className="w-full" variant="secondary" onClick={() => window.location.href = '/reports'}>
+                <Button className="w-full" variant="secondary" onClick={() => router.push('/reports')}>
                   View Reports
                 </Button>
               </div>

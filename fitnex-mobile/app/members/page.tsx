@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import AuthGuard from '@/components/auth/AuthGuard';
 import { useAuth } from '@/hooks/useAuth';
@@ -9,6 +10,7 @@ import CreateMemberForm from '@/components/members/CreateMemberForm';
 import Button from '@/components/ui/Button';
 
 export default function MembersPage() {
+  const router = useRouter();
   const { logout } = useAuth();
   const { members, loading, createMember, fetchMembers } = useMembers();
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -25,7 +27,7 @@ export default function MembersPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between h-16">
               <div className="flex items-center gap-4">
-                <Button variant="secondary" size="sm" onClick={() => window.location.href = '/dashboard'}>
+                <Button variant="secondary" size="sm" onClick={() => router.push('/dashboard')}>
                   ← Back
                 </Button>
                 <h1 className="text-xl font-bold text-gray-800">Members</h1>
