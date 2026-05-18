@@ -18,7 +18,7 @@ app.use(cors({
     'http://localhost:3002',
     'http://localhost:3003',
     'http://localhost:3004',
-    'https://fitnex-gym-system.vercel.app',
+    'https://fitnex-gym-system-tablet.vercel.app',
     'https://fitnex-gym-system-mobile.vercel.app'
   ],
   credentials: true
